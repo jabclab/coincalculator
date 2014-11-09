@@ -4,7 +4,11 @@
   "description": "Web service which takes an amount in pounds and pence and returns the minimum amount of coins which make that amount.",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+     "test": "mocha --reporter spec --bail --check-leaks --globals 'sandbox' --growl test/fixtures/ test/ test/acceptance/",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --require test/support/env --reporter dot --check-leaks --globals 'sandbox' test/fixtures/ test/ test/acceptance",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --require test/support/env --reporter spec --check-leaks --globals 'sandbox' test/fixtures test/ test/acceptance",
+    "watch": "nodemon --quiet --ext 'js,json' --exec 'npm test'",
+	"start": "node lib/server.js"
   },
   "repository": {
     "type": "git",
@@ -25,10 +29,15 @@
     "mocha": "^2.0.1",
     "nodemon": "^1.2.1",
     "sinon": "^1.11.1",
-    "sinon-chai": "^2.6.0"
+    "sinon-chai": "^2.6.0",
+    "supertest": "^0.14.0"
   },
   "dependencies": {
     "hapi": "^7.2.0",
-    "joi": "^4.7.0"
+    "joi": "^4.7.0",
+    "lodash": "^2.4.1"
+  },
+  "engines": {
+	"node": ">= 0.10.0"
   }
 }
